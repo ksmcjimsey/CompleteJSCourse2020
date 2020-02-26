@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Asynchronous JavaScript</title>
+</head>
+<body>
+    <h1>Asynchronous JavaScript</h1>
+    <script>
+        
+        
+/*        const second = () => {
+            setTimeout( () => {
+                console.log('Async second');
+            }, 2000)    // two seconds
+        }
+        
+        const first = () => {
+            console.log("New ES6 function.");
+            second();
+            console.log("The end");
+        }
+        
+        first();*/
+        
+        
+        // Video 122 Old AJAX with call backs
+        // Example of three chained ajax calls.
+        // This is the "callback hell" in JS.
+/*        function getRecipe() {
+            setTimeout( () => {
+                const recipeID = [523, 883, 432, 974];
+                console.log(recipeID);
+                
+                // Get recipe with id 2 back.
+                // that is a function created in the setTimeout parameter
+                setTimeout(id => {
+                    const recipe = {title: 'Fresh tomato pasta',
+                                   publisher: 'Jonas'}
+                    console.log(`${id}: ${recipe.title}`);
+                    
+                    setTimeout(publisher => {
+                        const recipe2 = {title: 'Italian Pizza',
+                                   publisher: 'Jonas'}
+                        console.log(recipe2);
+                    }, 3000, recipe.publisher);
+                    
+                }, 2000, recipeID[2]);
+                
+            }, 1500)    // 1.5 seconds
+        }
+        getRecipe();*/
+        
+        
+        // Vidoe 123 Promises
+        // Object that keeps track about whether a certain event has happened
+        // already or not.
+        // Promise states: pending, settled/resolved, fulfilled, rejected
+        
+        // New promise object with executer as the argument
+        // Executer is a function that is run once the promise is resolved.
+        // resolve and reject are standard names for executer
+        const getIDs = new Promise( (resolve, reject) => {
+            setTimeout( () => {
+                resolve([523, 883, 432, 974]);  // promise is resolved after 1.5 second
+            }, 3000);
+        });
+        
+        // Function, called recID, that returns a promise.
+        // because we want to chain the thens below we need a function
+        // that returns a promise.
+        // recID is passed into the anonymous function
+        const getRecipe = recID => {
+            return new Promise( (resolve, reject) => {
+                setTimeout(ID => {
+                    const recipe = {title: 'Fresh tomato pasta',
+                                publisher: 'Jonas'}
+                resolve(`${ID}: ${recipe.title}`);
+                }, 2000, recID)
+            });
+        };
+        
+        const getRelated = publisher => {
+            return new Promise( (resolve, reject) => {
+                setTimeout(pub => {
+                    const recipe = {title: 'Italian Pizza',
+                                    publisher: 'Jonas'}
+                    resolve(`${pub}: ${recipe.title}`);
+                }, 1500, publisher)
+            });
+        };
+        
+        
+        // All promise objects get a then and catch method incluced
+        // Whatever is on the left of the arrow is what was assigned to 
+        // the promise from the return.
+        getIDs
+        .then(IDs => {
+            console.log(IDs);
+            return getRecipe(IDs[2]);   // Returns a promise
+        })
+        .then (recipe => {
+            console.log(recipe);
+            return getRelated('Jonas');
+        })
+        .then (recipe => {
+            console.log(recipe);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+        
+        
+        
+        // Video 124
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    </script>
+</body>
+</html>
+© 2020 GitHub, Inc.
