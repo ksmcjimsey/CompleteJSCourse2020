@@ -55,6 +55,7 @@
         
         
         // Vidoe 123 Promises
+        //
         // Object that keeps track about whether a certain event has happened
         // already or not.
         // Promise states: pending, settled/resolved, fulfilled, rejected
@@ -62,59 +63,97 @@
         // New promise object with executer as the argument
         // Executer is a function that is run once the promise is resolved.
         // resolve and reject are standard names for executer
-        const getIDs = new Promise( (resolve, reject) => {
-            setTimeout( () => {
-                resolve([523, 883, 432, 974]);  // promise is resolved after 1.5 second
-            }, 3000);
-        });
-        
-        // Function, called recID, that returns a promise.
-        // because we want to chain the thens below we need a function
-        // that returns a promise.
-        // recID is passed into the anonymous function
-        const getRecipe = recID => {
-            return new Promise( (resolve, reject) => {
-                setTimeout(ID => {
-                    const recipe = {title: 'Fresh tomato pasta',
-                                publisher: 'Jonas'}
-                resolve(`${ID}: ${recipe.title}`);
-                }, 2000, recID)
-            });
-        };
-        
-        const getRelated = publisher => {
-            return new Promise( (resolve, reject) => {
-                setTimeout(pub => {
-                    const recipe = {title: 'Italian Pizza',
-                                    publisher: 'Jonas'}
-                    resolve(`${pub}: ${recipe.title}`);
-                }, 1500, publisher)
-            });
-        };
+//        const getIDs = new Promise( (resolve, reject) => {
+//            setTimeout( () => {
+//                resolve([523, 883, 432, 974]);  // promise is resolved after 1.5 second
+//            }, 3000);
+//        });
+//        
+//        // Function, called recID, that returns a promise.
+//        // because we want to chain the thens below we need a function
+//        // that returns a promise.
+//        // recID is passed into the anonymous function
+//        const getRecipe = recID => {
+//            return new Promise( (resolve, reject) => {
+//                setTimeout(ID => {
+//                    const recipe = {title: 'Fresh tomato pasta',
+//                                publisher: 'Jonas'}
+//                resolve(`${ID}: ${recipe.title}`);
+//                }, 2000, recID)
+//            });
+//        };
+//        
+//        const getRelated = publisher => {
+//            return new Promise( (resolve, reject) => {
+//                setTimeout(pub => {
+//                    const recipe = {title: 'Italian Pizza',
+//                                    publisher: 'Jonas'}
+//                    resolve(`${pub}: ${recipe.title}`);
+//                }, 1500, publisher)
+//            });
+//        };
         
         
         // All promise objects get a then and catch method incluced
         // Whatever is on the left of the arrow is what was assigned to 
         // the promise from the return.
-        getIDs
-        .then(IDs => {
+//        getIDs
+//        .then(IDs => {
+//            console.log(IDs);
+//            return getRecipe(IDs[2]);   // Returns a promise
+//        })
+//        .then (recipe => {
+//            console.log(recipe);
+//            return getRelated('Jonas');
+//        })
+//        .then (recipe => {
+//            console.log(recipe);
+//        })
+//        .catch(error => {
+//            console.log(error);
+//        });
+        
+        
+        
+        // Video 124 Async/Await is used to consume promises
+        //
+        
+/*        async function getRecipesAW() {
+            const IDs = await getIDs;   // Wait for data to return
             console.log(IDs);
-            return getRecipe(IDs[2]);   // Returns a promise
-        })
-        .then (recipe => {
+            
+            const recipe = await getRecipe(IDs[2]);
             console.log(recipe);
-            return getRelated('Jonas');
+            
+            const related = await getRelated ("Jonas");
+            console.log(related);
+            
+            return recipe;
+        }
+        
+        // Have to use the then to wait for the result to come back.
+        getRecipesAW().then(result => console.log(`${result} is the best ever!`) );     // Make request
+        */
+        
+        
+        // Video 126 Making AJAX calls with fetch and promise
+        //
+        
+        // Fails because it needs Cross Orgin Resource Sharing (CORS)
+        // We have to proxy the request to our server.
+        // We use another server that does this for us.
+        //fetch('https://www.metaweather.com/api/location/search/?query=san');
+        fetch('https://crossorigin.me/https://www.metaweather.com/api/location/2487956/')
+        .then(result => {
+            console.log(result);
+            return result.json();
         })
-        .then (recipe => {
-            console.log(recipe);
+        .then(data => {
+            console.log(data);
         })
-        .catch(error => {
-            console.log(error);
-        });
+        .catch(error => console.log(error));
         
         
-        
-        // Video 124
         
         
         

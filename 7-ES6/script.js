@@ -471,7 +471,7 @@ var emily = new SmithPerson("Emily", 1983, "Diaz", "Spanish");*/
 
 
 // ES 6 Defaults
-function SmithPerson(firstName, yearOfBirth, lastName = "Smith", nationality = "American") {
+/*function SmithPerson(firstName, yearOfBirth, lastName = "Smith", nationality = "American") {
     
     this.firstName = firstName;
     this.lastName = lastName;
@@ -482,55 +482,192 @@ function SmithPerson(firstName, yearOfBirth, lastName = "Smith", nationality = "
 
 // Add a new Smith object called John and another called Emily
 var john = new SmithPerson("John", 1990);   // We do not have to specify all the arguments
-var emily = new SmithPerson("Emily", 1983, "Diaz", "Spanish");
+var emily = new SmithPerson("Emily", 1983, "Diaz", "Spanish");*/
+
+
+
+// Video 114 Maps (use to use objects)
+//
+
+// Maps can have any key where objects must use strings
+
+/*const question = new Map();
+question.set('question', "What is the official name of the latested major JavaScript version");
+question.set(1, 'ES5');
+question.set(2, 'ES6');
+question.set(3, 'ES2015');
+question.set(4, 'ES7');
+question.set('correct', 3);
+question.set(true, "Correct answer :D");
+question.set(false, "Wrong, please try again!");
+
+// See what is in the map
+console.log( question.get("question") );
+
+console.log(question.size);
+
+// check and delete
+if (question.has(5)) {
+    // Delete
+    question.delete(5);
+}
+
+//question.delete(4);  // No error
+
+
+// Clear the whole map
+//question.clear();
+
+
+// Can loop through maps
+/*question.forEach( (value, key) =>
+    console.log (`This is ${key}, and it's set to ${value}`) );*/
+
+
+// Using entries returns all the key value pairs
+// Destructuring
+/*for (let [key, value] of question.entries()) {
+    console.log (`This is ${key}, and it's set to ${value}`);
+}*/
+
+/*
+for (let [key, value] of question.entries()) {
+    if (typeof(key) === "number") {
+        console.log (`Answer ${key}: ${value}`);
+    }
+}
+
+const ans = parseInt ( prompt("Write the correct number to the answer") );
+//console.log (ans, question.get('correct'));
+
+// If the answer matches then return true or false and use the true or false
+// as a key to get the message.
+console.log ( question.get (ans === question.get('correct') ) );*/
 
 
 
 
+// Video 115 - Classes: easier syntax for prototype
+/*var Person5 = function (name, yearOfBirth, job) {
+    this.name = name;
+    this.yearOfBirth = yearOfBirth;
+    this.job = job;
+}
+
+// Add a method to the function object above - done out here so it is
+// only created once
+Person5.prototype.calculateAge = function() {
+    // Prototype can use values from the object using "this."
+    var age = new Date().getFullYear() - this.yearOfBirth;
+    console.log(age);
+}
+
+var John5 = new Person5("John", 1980, "teacher");
+John5.calculateAge();
+
+
+// ES6 - class
+class Person6 {
+    constructor (name, yearOfBirth, job) {
+        this.name = name;
+        this.yearOfBirth = yearOfBirth;
+        this.job = job;
+    }
+
+    // Can add methods in the class and they will not be repeated.
+    calculateAge() {
+        var age = new Date().getFullYear() - this.yearOfBirth;
+        console.log(this.age);
+    }
+
+    static greeting() {
+        console.log("Hey there!");
+    }
+}
+
+var Mark6 = new Person5("Mark", 1970, "programmer");
+Mark6.calculateAge();
+Person6.greeting();*/
 
 
 
+// Video 116 - Classes with Subclasses and inheritance
+//
+
+// ES 5 - Super class
+var Person5 = function (name, yearOfBirth, job) {
+    this.name = name;
+    this.yearOfBirth = yearOfBirth;
+    this.job = job;
+}
+
+// Add a method to the function object above - done out here so it is
+// only created once
+Person5.prototype.calculateAge = function() {
+    // Prototype can use values from the object using "this."
+    var age = new Date().getFullYear() - this.yearOfBirth;
+    console.log(age);
+}
+
+// Subclass of Athlete
+var Athete5 = function(name, yearOfBirth, job, olympicGames, medals) {
+    Person5.call(this, name, yearOfBirth, job);
+    this.olympicGames = olympicGames;
+    this.medals = medals
+}
+
+// proto of an Athlete will be Person5
+Athete5.prototype = Object.create(Person5.prototype);
+
+Athete5.prototype.wonMedal = function() {
+    this.medals++;
+    console.log(this.medals);
+}
+
+var johnAthlete5 = new Athete5("John", 1980, "swimmer", 3, 10);
+johnAthlete5.calculateAge();
+
+johnAthlete5.wonMedal();
 
 
 
+// ES6 inheritance
+class Person6 {
 
+    constructor (name, yearOfBirth, job) {
+        this.name = name;
+        this.yearOfBirth = yearOfBirth;
+        this.job = job;
+    }
 
+    // Can add methods in the class and they will not be repeated.
+    calculateAge() {
+        var age = new Date().getFullYear() - this.yearOfBirth;
+        console.log(age);
+    }
 
+    static greeting() {
+        console.log("Hey there!");
+    }
+}
 
+class Athlete6 extends Person6 {
 
+    constructor (name, yearOfBirth, job, olympicGames, medals) {
+        super(name, yearOfBirth, job);
+        this.olympicGames = olympicGames;
+        this.medals = medals;
+    }
 
+    wonMedal() {
+        this.medals++;
+        console.log(this.medals);
+    }
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+const markAthlete6 = new Athlete6("Mark", 1990, 'swimmer', 2, 7);
+markAthlete6.calculateAge();
+markAthlete6.wonMedal();
 
 
 
