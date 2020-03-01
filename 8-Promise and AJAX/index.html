@@ -143,20 +143,57 @@
         // We have to proxy the request to our server.
         // We use another server that does this for us.
         //fetch('https://www.metaweather.com/api/location/search/?query=san');
-        fetch('https://crossorigin.me/https://www.metaweather.com/api/location/2487956/')
-        .then(result => {
-            console.log(result);
-            return result.json();
-        })
-        .then(data => {
-            console.log(data);
-        })
-        .catch(error => console.log(error));
+        function getWeather(woeid) {
+            
+            fetch(`http://api.openweathermap.org/data/2.5/weather?q=${woeid}&APPID=fd62749f34fc06a114f8a4cd99ae2b61`)
+            
+            .then(result => {
+                //console.log(result);
+                return result.json();
+            })
+            .then(data => {
+                //console.log("Data is: " + data);
+                const today = data.weather[0];
+                console.log(`Temperatures in ${data.name} stay between ${data.main.temp_min} and ${data.main.temp_min} in degrees kelvin`)
+            })
+            .catch(error => console.log(error));
+        }
+        
+        getWeather("Budapest");
+        getWeather("San Francisco");
         
         
+        // Lecture 127 Async JSON API call
+        //
+        async function getWeatherAW(woeid) {
+            
+            try {
+                const result = await fetch
+                (`http://api.openweathermap.org/data/2.5/weather?q=${woeid}&APPID=fd62749f34fc06a114f8a4cd99ae2b61`)
+            
+                const data = await result.json();
+                //console.log(data);
+
+                const today = data.weather[0];
+                console.log(`Temperatures in ${data.name} stay between ${data.main.temp_min} and ${data.main.temp_min} in degrees kelvin`);
+                
+                return data;
+                
+            } catch (error) {
+                alert(error);
+            }
+            
+            
+        }
         
+        getWeatherAW("Sacramento");
         
-        
+        // To set a var with data but it needs to wait to get set
+        let dataSantaRosa;
+        getWeatherAW("Santa Rosa").then(data => {
+            dataSantaRosa = data;
+            console.log(dataSantaRosa);
+        });
         
         
         
